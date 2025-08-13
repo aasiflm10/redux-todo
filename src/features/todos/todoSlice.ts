@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 
 export interface Todo {
@@ -41,7 +41,27 @@ const todoSlice = createSlice({
     }
 
   },
+
+  extraReducers: (builder) => {
+    builder.addCase(fetchTodos.fulfilled, (state, action) => {
+      state.todos = action.payload;
+    });
+  }
+
 });
+
+export const fetchTodos = createAsyncThunk(
+  'todos/fetchTodos',
+  async () => {
+    // simulate an API call
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    return [
+      { id: crypto.randomUUID(), title: 'Learn Redux', completed: false },
+      { id: crypto.randomUUID(), title: 'Build a project', completed: false },
+    ];
+  }
+);
+
 
 export const { addTodo, toggleTodo, deleteTodo, editTodo} = todoSlice.actions;
 export default todoSlice.reducer;

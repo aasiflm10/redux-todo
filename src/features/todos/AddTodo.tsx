@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addTodo } from './todoSlice';
+import { addTodo, fetchTodos } from './todoSlice';
 import type { AppDispatch } from '../../app/store';
 
 const AddTodo = () => {
@@ -15,6 +15,7 @@ const AddTodo = () => {
   };
 
   return (
+    <div>
     <form onSubmit={handleSubmit} className="flex gap-2 mb-6">
       <input
         type="text"
@@ -30,6 +31,15 @@ const AddTodo = () => {
         Add
       </button>
     </form>
+    <span/>
+    <button
+      type="button"
+      onClick={() => dispatch(fetchTodos())}
+      className="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600"
+    >
+      Load Sample Todos
+  </button>
+    </div>
   );
 };
 
